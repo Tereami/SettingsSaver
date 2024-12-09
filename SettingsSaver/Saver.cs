@@ -64,14 +64,14 @@ namespace SettingsSaver
             return Value;
         }
 
-        public void Save()
+        public void Save(T newSettings)
         {
             Debug.WriteLine("Start save settings to file " + xmlPath);
             Reset();
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (FileStream writer = new FileStream(xmlPath, FileMode.OpenOrCreate))
             {
-                serializer.Serialize(writer, Value);
+                serializer.Serialize(writer, newSettings);
             }
             Debug.WriteLine("Save settings success");
         }
@@ -88,6 +88,11 @@ namespace SettingsSaver
             {
                 throw new Exception("FAILED TO DELETE FILE " + xmlPath);
             }
+        }
+
+        public string GetXmlPath()
+        {
+            return xmlPath;
         }
     }
 }
